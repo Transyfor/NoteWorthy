@@ -1,0 +1,83 @@
+{% load static %}
+<head>
+    <style>
+    </style>
+    <title>
+        Note Worthy
+    </title>
+</head>
+<body class="corkLogReg" style="display: flex; align-items: center; justify-content: center; background-image: url('{% static 'corkboard.jpg' %}');">
+<div id="stickyText" style="width:300px; height:auto; background-image: url(https://i.pinimg.com/originals/71/6d/60/716d609bcb461d893984f74648498124.png); background-size: cover; height:150px; padding-top: 80px; padding-left: 75px; padding-bottom: 130px; font-family: monospace">
+    <form method="post">
+    <table>
+    {% csrf_token %}
+    <tr>
+    <td>
+    Name: 
+    </td>
+    <td>
+    <input type="text" name="name" id="nameBox" oninput="enabler()" value="{{name}}">
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Email: 
+    </td>
+    <td>
+    <input type="text" name="email" id="emailBox" oninput="enabler()" value="{{email}}">
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Username:
+    </td>
+    <td>
+    <input type="text" name="username" id="usernameBox" oninput="enabler()" value="{{username}}">
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Password:
+    </td>
+    <td>
+    <input type="password" name="password" id="passBox" oninput="enabler()" value="{{password}}">
+    </td>
+    </tr>
+    </table>
+    <div style="position: relative; left:80px; top: 30px">
+        <button id="submitButton" style="border-radius:10px; width:100px; right:10px;
+        height: 50px;
+        border: none;
+        outline: none;
+        background: #2f2f2f;
+        color: #fff;
+        font-size: 22px;
+        border-radius: 40px;
+        text-align: center;
+        box-shadow: 0 6px 20px -5px rgba(0,0,0,0.4);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;}" disabled="true">
+    Register
+    </button>       
+     </div>
+    <div style="position: relative; top:60px" >Already have an account? <a href="{% url 'authApp:login' %}">Sign in</a>
+   </form>
+</div>
+</body>
+<script>
+    function enabler(){
+        if (document.getElementById("nameBox").value !== "" || document.getElementById("emailBox").value!=="" || document.getElementById("usernameBox").value!=="" || document.getElementById("passBox").value!==""){
+            document.getElementById("submitButton").disabled=false
+        }
+        else
+            document.getElementById("submitButton").disabled=true
+    }
+    {% if success %}
+    alert("{{ success }}")
+    window.location.replace("{% url 'authApp:login' %}");
+    {% endif %}
+    {% if error %}
+    alert("{{ error }}")
+    {% endif %}
+</script>

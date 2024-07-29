@@ -1,0 +1,90 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'myfirst.css' %}">
+<head>
+    <style>
+        .corkLogReg {
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background-image: url('{% static 'corkboard.jpg' %}');
+        }
+
+        #stickyNoteLogo {
+            background-image: url('{% static "stickynoteBig.png" %}');
+            background-size: cover; 
+            width: 200px; 
+            height: 200px; 
+            padding-top:200px; 
+            padding-left: 100px; 
+            padding-right: 200px; 
+            font-family: Chalkduster, monospace; 
+            font-size:50px; 
+            width:400px; 
+            padding-bottom: 60px
+        }
+
+        #stickyText {
+            width:300px; 
+            height:auto; 
+            background-image: url(https://i.pinimg.com/originals/71/6d/60/716d609bcb461d893984f74648498124.png); 
+            background-size: cover; 
+            height:150px; 
+            padding-top: 120px; 
+            padding-left: 80px; 
+            padding-bottom: 120px;
+        }
+
+        #submitButton{
+            border-radius:10px; width:85px; 
+            height: 50px;
+            border: none;
+            outline: none;
+            background: #2f2f2f;
+            color: #fff;
+           font-size: 22px;
+           border-radius: 40px;
+           text-align: center;
+           box-shadow: 0 6px 20px -5px rgba(0,0,0,0.4);
+           position: relative;
+          overflow: hidden;
+          cursor: pointer;
+        }
+    </style>
+<title>
+    Note Worthy
+</title>
+</head>
+<body class="corkLogReg">
+    <div id="stickyNoteLogo">
+        Note Worthy
+        <br>
+        <b style="font-family: monospace; font-size: 30px"> Free Sticky Note Saver</b>
+    </div>
+    <div id="stickyText">
+<form method="post" style="font-family: monospace">
+    {% csrf_token %}
+    Username: 
+    <input id="userBox" type="text" name="username" oninput="enabler()">
+    <br>
+    <br>
+    Password: 
+    <input type="password" name="password" id="passBox" oninput="enabler()">
+    <div style="position: relative; left:80px; top: 40px">
+    <button id="submitButton" disabled=true>Login</button>
+    </div>
+    <div style="position: relative; top:60px">Don't have an account? <a href="{% url 'authApp:register' %}">Sign up</a>
+   </form>
+</div>
+</body>
+<script>
+function enabler(){
+    if (document.getElementById("userBox").value !== "" || document.getElementById("passBox").value!==""){
+        document.getElementById("submitButton").disabled=false
+    }
+    else
+        document.getElementById("submitButton").disabled=true
+}
+{% if error %}
+   alert("{{error}}")
+{% endif %}
+</script>

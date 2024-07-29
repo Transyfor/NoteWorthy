@@ -1,0 +1,5 @@
+{% load static %}
+
+.corkLogReg {
+    display: flex; align-items: center; justify-content: center; background-image: url('{% static 'corkboard.jpg' %}');
+}

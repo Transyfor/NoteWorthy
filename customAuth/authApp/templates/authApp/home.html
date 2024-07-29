@@ -1,0 +1,132 @@
+{% load static %}
+<head>
+    <style>
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed; /* Set the navbar to fixed position */
+            top: 0; /* Position the navbar at the top of the page */
+            width: 100%; /* Full width */
+            color: white;
+            font-size:30px;
+            font-family: monospace;
+            height: 50px;
+            padding-top:5px;
+            padding-left:5px;
+            }
+        *, html {
+                margin:0;
+                padding:0;  
+                }
+        .gg-log-out {
+            position:absolute;
+            top: 13px;
+            right: 10px;}
+    #logoutButton{        
+            border-radius:10px; 
+            width:90px; 
+    height: 30px;
+    border: none;
+    outline: none;
+    background: hsl(216, 100, 40);
+    color: black;
+    font-size: 22px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 6px 20px -5px rgba(0,0,0,0.4);
+    overflow: hidden;
+    cursor: pointer;
+        }
+
+        .stickyData{
+            padding-top:15px;
+            padding-left:10px;
+            width:420px;
+            overflow-wrap: anywhere;
+            filter: drop-shadow(5px 5px rgba(0,0,0,0.3))
+        }
+
+        #userStickiesTable{
+            width:420px;
+        }
+        
+        .corkLogReg{
+            background-image: url('{% static 'corkboard.jpg' %}'); 
+            padding-top:100px;
+        }
+
+        #newTextArea{
+            resize:none; 
+            width:420px; 
+            height:180px
+        }
+        </style>
+<title>
+    Note Worthy
+</title>
+</head>
+<body class="corkLogReg">
+    <div class="navbar">
+        Welcome, {{session.name|capfirst}}!
+    <div id="logout" class="gg-log-out" >
+        <button id="logoutButton" onclick="location.href='{% url 'authApp:logout' %}';"> Log Out </button>
+    </div>
+    </div>
+    <div id="stickies" style="margin:auto; width:420px">
+    <form id="newStickyForm" method="post" oninput="enabler()">
+        {% csrf_token %}
+        <textarea id="newTextArea" placeholder="Write a new sticky" maxlength="500" name="stickyData" id="stickyDataBox" ></textarea>
+        <input type="submit" id="submitButton" style="width: 420px" disabled=true>
+    </form>
+    <br>
+    <table id="userStickiesTable"> 
+        {% for sticky in userStickies%}
+        <tr>
+            <td class="stickyData">
+                {{ sticky.sticky}}
+            </td>
+        </tr>
+            <tr>
+            <td>
+            <button id="deleteButton" style="width:420px"onclick="location.href='{% url 'authApp:delete_sticky' sticky.id %}';"> Delete </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+<footer>
+</footer>
+<script>
+    function enabler(){
+        if (document.getElementById("stickyDataBox").value !== ""){
+            document.getElementById("submitButton").disabled=false
+        }
+        else
+            document.getElementById("submitButton").disabled=true
+    }
+
+    // Select all table cells with class 'stickyData'
+const stickyDataCells = document.querySelectorAll('td.stickyData');
+
+// Iterate through each cell
+stickyDataCells.forEach((cell, index)=>{
+    // Perform any operation on each cell, here we just log the cell's content
+    if(index%5==0){
+        cell.style.backgroundImage="url('{% static 'stickyNoteYellow.png' %}')"
+    }
+    if(index%5==1){
+        cell.style.backgroundImage="url('{% static 'stickyNoteBlue.png' %}')"
+    }
+    if(index%5==2){
+        cell.style.backgroundImage="url('{% static 'stickyNoteGreen.png' %}')"
+    }
+    if(index%5==3){
+        cell.style.backgroundImage="url('{% static 'stickyNotePurple.png' %}')"
+    }
+    if(index%5==4){
+        cell.style.backgroundImage="url('{% static 'stickyNoteRed.png' %}')"
+    }
+    
+});
+</script>
