@@ -55,7 +55,7 @@
             padding-top:100px;
         }
 
-        #newTextArea{
+        #stickyDataBox{
             resize:none; 
             width:420px; 
             height:180px
@@ -75,7 +75,7 @@
     <div id="stickies" style="margin:auto; width:420px">
     <form id="newStickyForm" method="post" oninput="enabler()">
         {% csrf_token %}
-        <textarea id="newTextArea" placeholder="Write a new sticky" maxlength="500" name="stickyData" id="stickyDataBox" ></textarea>
+        <textarea oninput="enabler()" placeholder="Write a new sticky" maxlength="500" name="stickyData" id="stickyDataBox" ></textarea>
         <input type="submit" id="submitButton" style="width: 420px" disabled=true>
     </form>
     <br>
